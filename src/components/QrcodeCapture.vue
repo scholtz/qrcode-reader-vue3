@@ -24,7 +24,7 @@ export default {
       const resultPromises = files.map(processFile);
 
       resultPromises.forEach(this.onDetect);
-    }
-  }
+    },
+  },
 };
 </script>

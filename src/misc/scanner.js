@@ -1,16 +1,13 @@
-import { DropImageFetchError, DropImageDecodeError } from "./errors.js";
+import { DropImageFetchError } from "./errors.js";
+import BarcodeDetector from "barcode-detector";
 import { eventOn } from "callforth";
 
-const adaptOldFormat = detectedCodes => {
+const adaptOldFormat = (detectedCodes) => {
   if (detectedCodes.length > 0) {
-    const [ firstCode ] = detectedCodes;
+    const [firstCode] = detectedCodes;
 
-    const [
-      topLeftCorner,
-      topRightCorner,
-      bottomRightCorner,
-      bottomLeftCorner
-    ] = firstCode.cornerPoints
+    const [topLeftCorner, topRightCorner, bottomRightCorner, bottomLeftCorner] =
+      firstCode.cornerPoints;
 
     return {
       content: firstCode.rawValue,
@@ -23,18 +20,20 @@ const adaptOldFormat = detectedCodes => {
         // not supported by native API:
         topLeftFinderPattern: {},
         topRightFinderPattern: {},
-        bottomLeftFinderPattern: {}
+        bottomLeftFinderPattern: {},
       },
-      imageData: null
-    }
+      imageData: null,
+      binaryData: null,
+    };
   } else {
     return {
       content: null,
       location: null,
-      imageData: null
-    }
+      imageData: null,
+      binaryData: null,
+    };
   }
-}
+};
 
 /**
  * Continuously extracts frames from camera stream and tries to read
@@ -45,29 +44,33 @@ export const keepScanning = (videoElement, options) => {
 
   const { detectHandler, locateHandler, minDelay } = options;
 
-  const processFrame = state => async timeNow => {
+  const processFrame = (state) => async (timeNow) => {
     if (videoElement.readyState > 1) {
-      const { lastScanned, contentBefore, locationBefore } = state
+      const { lastScanned, contentBefore, locationBefore } = state;
 
       if (timeNow - lastScanned >= minDelay) {
         const detectedCodes = await barcodeDetector.detect(videoElement);
-        const { content, location, imageData } = adaptOldFormat(detectedCodes)
+        const { content, location, imageData, binaryData } =
+          adaptOldFormat(detectedCodes);
 
         if (content !== null && content !== contentBefore) {
-          detectHandler({ content, location, imageData });
+          detectHandler({ content, location, imageData, binaryData });
         }
 
         if (location !== null || locationBefore !== null) {
           locateHandler(detectedCodes);
         }
 
-        window.requestAnimationFrame(processFrame({
-          lastScanned: timeNow,
-          contentBefore: content ?? contentBefore,
-          locationBefore: location
-        }))
+        window.requestAnimationFrame(
+          processFrame({
+            lastScanned: timeNow,
+            contentBefore: content ?? contentBefore,
+            locationBefore: location,
+            binaryData: binaryData,
+          })
+        );
       } else {
-        window.requestAnimationFrame(processFrame(state))
+        window.requestAnimationFrame(processFrame(state));
       }
     }
   };
@@ -75,11 +78,12 @@ export const keepScanning = (videoElement, options) => {
   processFrame({
     contentBefore: null,
     locationBefore: null,
-    lastScanned: performance.now()
+    lastScanned: performance.now(),
+    binaryData: null,
   })();
 };
 
-const imageElementFromUrl = async url => {
+const imageElementFromUrl = async (url) => {
   if (url.startsWith("http") && url.includes(location.host) === false) {
     throw new DropImageFetchError();
   }
@@ -90,19 +94,19 @@ const imageElementFromUrl = async url => {
   await eventOn(image, "load");
 
   return image;
-}
+};
 
-export const processFile = async file => {
-  const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] })
-  const detectedCodes = await barcodeDetector.detect(file)
+export const processFile = async (file) => {
+  const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
+  const detectedCodes = await barcodeDetector.detect(file);
 
-  return adaptOldFormat(detectedCodes)
-}
+  return adaptOldFormat(detectedCodes);
+};
 
-export const processUrl = async url => {
-  const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] })
+export const processUrl = async (url) => {
+  const barcodeDetector = new BarcodeDetector({ formats: ["qr_code"] });
   const image = await imageElementFromUrl(url);
-  const detectedCodes = await barcodeDetector.detect(image)
+  const detectedCodes = await barcodeDetector.detect(image);
 
-  return adaptOldFormat(detectedCodes)
-}
+  return adaptOldFormat(detectedCodes);
+};

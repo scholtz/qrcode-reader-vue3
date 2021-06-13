@@ -1,4 +1,4 @@
-export const indempotent = action => {
+export const indempotent = (action) => {
   let called = false;
   let result = undefined;
 

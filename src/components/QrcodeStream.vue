@@ -45,29 +45,29 @@ export default {
 
       validator(camera) {
         return ["auto", "rear", "front", "off"].includes(camera);
-      }
+      },
     },
 
     torch: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     track: {
-      type: Function
-    }
+      type: Function,
+    },
   },
 
   data() {
     return {
       cameraInstance: null,
-      destroyed: false
+      mounted: false,
     };
   },
 
   computed: {
     shouldStream() {
-      return this.destroyed === false && this.camera !== "off";
+      return this.mounted && this.camera !== "off";
     },
 
     shouldScan() {
@@ -84,7 +84,7 @@ export default {
       } else {
         return 40; // ~ 25fps
       }
-    }
+    },
   },
 
   watch: {
@@ -115,16 +115,23 @@ export default {
 
     camera() {
       this.init();
-    }
+    },
   },
 
   mounted() {
     this.init();
+    this.mounted = true;
   },
 
+  // Vue 2:
   beforeDestroy() {
     this.beforeResetCamera();
-    this.destroyed = true;
+    this.mounted = false;
+  },
+  // Vue 3:
+  beforeUnmount() {
+    this.beforeResetCamera();
+    this.mounted = false;
   },
 
   methods: {
@@ -136,12 +143,12 @@ export default {
           this.cameraInstance = null;
 
           return {
-            capabilities: {}
+            capabilities: {},
           };
         } else {
           this.cameraInstance = await Camera(this.$refs.video, {
             camera: this.camera,
-            torch: this.torch
+            torch: this.torch,
           });
 
           const capabilities = this.cameraInstance.getCapabilities();
@@ -149,12 +156,12 @@ export default {
           // if the component is destroyed before `cameraInstance` resolves a
           // `beforeDestroy` hook has no chance to clear the remaining camera
           // stream.
-          if (this.destroyed) {
+          if (!this.mounted) {
             this.cameraInstance.stop();
           }
 
           return {
-            capabilities
+            capabilities,
           };
         }
       })();
@@ -163,14 +170,14 @@ export default {
     },
 
     startScanning() {
-      const detectHandler = result => {
+      const detectHandler = (result) => {
         this.onDetect(Promise.resolve(result));
       };
 
       keepScanning(this.$refs.video, {
         detectHandler,
         locateHandler: this.onLocate,
-        minDelay: this.scanInterval
+        minDelay: this.scanInterval,
       });
     },
 
@@ -181,89 +188,72 @@ export default {
       }
     },
 
-    onLocate(location) {
-      if (this.trackRepaintFunction === undefined || location === null) {
-        this.clearCanvas(this.$refs.trackingLayer);
-      } else {
-        const video = this.$refs.video;
-        const canvas = this.$refs.trackingLayer;
-
-        if (video !== undefined && canvas !== undefined) {
-          this.repaintTrackingLayer(video, canvas, location);
-        }
-      }
-    },
-
     onLocate(detectedCodes) {
       const canvas = this.$refs.trackingLayer;
       const video = this.$refs.video;
 
       if (canvas !== undefined) {
-        if (detectedCodes.length > 0 && this.track !== undefined && video !== undefined) {
-          // The visually occupied area of the video element.
-          // Because the component is responsive and fills the available space,
-          // this can be more or less than the actual resolution of the camera.
-          const displayWidth = video.offsetWidth;
-          const displayHeight = video.offsetHeight;
+        if (
+          detectedCodes.length > 0 &&
+          this.track !== undefined &&
+          video !== undefined
+        ) {
+          const adjustPoint = ({ x, y }) => {
+            // The visually occupied area of the video element.
+            // Because the component is responsive and fills the available space,
+            // this can be more or less than the actual resolution of the camera.
+            const displayWidth = video.offsetWidth;
+            const displayHeight = video.offsetHeight;
 
-          // The actual resolution of the camera.
-          // These values are fixed no matter the screen size.
-          const resolutionWidth = video.videoWidth;
-          const resolutionHeight = video.videoHeight;
+            // The actual resolution of the camera.
+            // These values are fixed no matter the screen size.
+            const resolutionWidth = video.videoWidth;
+            const resolutionHeight = video.videoHeight;
 
-          // Dimensions of the video element as if there would be no
-          //   object-fit: cover;
-          // Thus, the ratio is the same as the cameras resolution but it's
-          // scaled down to the size of the visually occupied area.
-          const largerRatio = Math.max(
-            displayWidth / resolutionWidth,
-            displayHeight / resolutionHeight
-          );
-          const uncutWidth = resolutionWidth * largerRatio;
-          const uncutHeight = resolutionHeight * largerRatio;
+            // Dimensions of the video element as if there would be no
+            //   object-fit: cover;
+            // Thus, the ratio is the same as the cameras resolution but it's
+            // scaled down to the size of the visually occupied area.
+            const largerRatio = Math.max(
+              displayWidth / resolutionWidth,
+              displayHeight / resolutionHeight
+            );
+            const uncutWidth = resolutionWidth * largerRatio;
+            const uncutHeight = resolutionHeight * largerRatio;
 
-          const xScalar = uncutWidth / resolutionWidth;
-          const yScalar = uncutHeight / resolutionHeight;
-          const xOffset = (displayWidth - uncutWidth) / 2;
-          const yOffset = (displayHeight - uncutHeight) / 2;
+            const xScalar = uncutWidth / resolutionWidth;
+            const yScalar = uncutHeight / resolutionHeight;
+            const xOffset = (displayWidth - uncutWidth) / 2;
+            const yOffset = (displayHeight - uncutHeight) / 2;
 
-          const scale = ({ x, y }) => {
             return {
-              x: Math.floor(x * xScalar),
-              y: Math.floor(y * yScalar)
+              x: Math.floor(x * xScalar + xOffset),
+              y: Math.floor(y * yScalar + yOffset),
             };
-          }
+          };
 
-          const translate = ({ x, y }) => {
-            return {
-              x: Math.floor(x + xOffset),
-              y: Math.floor(y + yOffset)
-            };
-          }
-
-          const adjustedCodes = detectedCodes.map(detectedCode => {
-            const { boundingBox, cornerPoints } = detectedCode
-
-            const { x, y } = translate(scale({
+          const adjustedCodes = detectedCodes.map((detectedCode) => {
+            const { boundingBox, cornerPoints } = detectedCode;
+            const { x, y } = adjustPoint({
               x: boundingBox.x,
-              y: boundingBox.y
-            }))
-            const { x: width, y: height } = scale({
+              y: boundingBox.y,
+            });
+            const { x: width, y: height } = adjustPoint({
               x: boundingBox.width,
-              y: boundingBox.height
-            })
+              y: boundingBox.height,
+            });
 
             return {
               ...detectedCode,
-              cornerPoints: cornerPoints.map(point => translate(scale(point))),
-              boundingBox: DOMRectReadOnly.fromRect({ x, y, width, height })
-            }
-          })
+              cornerPoints: cornerPoints.map(adjustPoint),
+              boundingBox: DOMRectReadOnly.fromRect({ x, y, width, height }),
+            };
+          });
 
           canvas.width = video.offsetWidth;
           canvas.height = video.offsetHeight;
 
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
 
           this.track(adjustedCodes, ctx);
         } else {
@@ -272,24 +262,11 @@ export default {
       }
     },
 
-    repaintTrackingLayer(video, canvas, location) {
-      const ctx = canvas.getContext("2d");
-
-
-      window.requestAnimationFrame(() => {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-
-        this.trackRepaintFunction(coordinatesAdjusted, ctx);
-      });
-    },
-
     clearCanvas(canvas) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-  }
+    },
+  },
 };
 </script>
 

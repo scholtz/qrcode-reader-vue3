@@ -29,14 +29,14 @@ export default {
       const droppedFiles = [...dataTransfer.files];
       const droppedUrl = dataTransfer.getData("text/uri-list");
 
-      droppedFiles.forEach(file => {
+      droppedFiles.forEach((file) => {
         this.onDetect(processFile(file));
       });
 
       if (droppedUrl !== "") {
         this.onDetect(processUrl(droppedUrl));
       }
-    }
-  }
+    },
+  },
 };
 </script>
