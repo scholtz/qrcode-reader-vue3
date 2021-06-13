@@ -171,6 +171,7 @@ export default {
 
     startScanning() {
       const detectHandler = (result) => {
+        console.log("onDetect.result", result);
         this.onDetect(Promise.resolve(result));
       };
 
@@ -189,6 +190,7 @@ export default {
     },
 
     onLocate(detectedCodes) {
+      console.log("onLocate.detectedCodes", detectedCodes);
       const canvas = this.$refs.trackingLayer;
       const video = this.$refs.video;
 
