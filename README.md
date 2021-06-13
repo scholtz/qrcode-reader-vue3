@@ -1,19 +1,19 @@
 <p align="center">
-  <img src="https://gruhn.github.io/vue-qrcode-reader/logo.png" alt="Logo" width="240" height="240" style="max-width: 100%;">
+  <img src="https://scholtz.github.io/qrcode-reader-vue3/logo.png" alt="Logo" width="240" height="240" style="max-width: 100%;">
 
   <br>
   <br>
 
   <a href="https://vuejs.org/">
-    <img src="https://img.shields.io/badge/vue-2.x-brightgreen.svg" alt="for Vue.js 2">
+    <img src="https://img.shields.io/badge/vue-3.x-brightgreen.svg" alt="for Vue.js 3">
   </a>
 
-  <a href="https://www.npmjs.com/package/vue-qrcode-reader">
-    <img src="https://img.shields.io/npm/dm/vue-qrcode-reader.svg" alt="npm monthly downloads">
+  <a href="https://www.npmjs.com/package/qrcode-reader-vue3">
+    <img src="https://img.shields.io/npm/dm/qrcode-reader-vue3.svg" alt="npm monthly downloads">
   </a>
 
-  <a href="https://travis-ci.org/gruhn/vue-qrcode-reader">
-    <img src="https://travis-ci.org/gruhn/vue-qrcode-reader.svg?branch=master" alt="Travis CI: build status">
+  <a href="https://travis-ci.org/scholtz/qrcode-reader-vue3">
+    <img src="https://travis-ci.org/scholtz/qrcode-reader-vue3.svg?branch=master" alt="Travis CI: build status">
   </a>
 
   <br>
@@ -40,12 +40,12 @@
 
   <br>
 
-  <a href="https://bundlephobia.com/result?p=vue-qrcode-reader">
-    <img src="https://badgen.net/bundlephobia/minzip/vue-qrcode-reader" alt="size minified + gzipped">
+  <a href="https://bundlephobia.com/result?p=qrcode-reader-vue3">
+    <img src="https://badgen.net/bundlephobia/minzip/qrcode-reader-vue3" alt="size minified + gzipped">
   </a>
 
-  <a href="https://www.npmjs.com/package/vue-qrcode-reader">
-    <img src="https://img.shields.io/npm/v/vue-qrcode-reader.svg" alt="npm current version">
+  <a href="https://www.npmjs.com/package/qrcode-reader-vue3">
+    <img src="https://img.shields.io/npm/v/qrcode-reader-vue3.svg" alt="npm current version">
   </a>
 
 
@@ -57,8 +57,8 @@
 
   <br>
   <br>
-  <a href="https://gruhn.github.io/vue-qrcode-reader/demos/DecodeAll.html">live demos</a> |
-  <a href="https://gruhn.github.io/vue-qrcode-reader/api/QrcodeStream.html">api reference</a>
+  <a href="https://scholtz.github.io/qrcode-reader-vue3/demos/DecodeAll.html">live demos</a> |
+  <a href="https://scholtz.github.io/qrcode-reader-vue3/api/QrcodeStream.html">api reference</a>
 </p>
 
 A set of Vue.js components, allowing you to detect and decode QR codes, without leaving the browser.
@@ -84,9 +84,9 @@ methods: {
 ### Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gruhn/vue-qrcode-reader/master/.github/screenshot1.png" height="500" alt="Screenshot 1">
-  <img src="https://raw.githubusercontent.com/gruhn/vue-qrcode-reader/master/.github/screenshot2.png" height="500" alt="Screenshot 2">
-  <img src="https://raw.githubusercontent.com/gruhn/vue-qrcode-reader/master/.github/screenshot3.png" height="500" alt="Screenshot 3">
+  <img src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/screenshot1.png" height="500" alt="Screenshot 1">
+  <img src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/screenshot2.png" height="500" alt="Screenshot 2">
+  <img src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/screenshot3.png" height="500" alt="Screenshot 3">
 </p>
 
 # Installation :package:
@@ -96,13 +96,19 @@ methods: {
 Run
 
 ```bash
-npm install vue-qrcode-reader
+npm install --save qrcode-reader-vue3
 ```
+
+If you are looking for QR Code generator, see qrcode-vue3 project
+```bash
+npm install --save qrcode-vue3
+```
+
 
 You can import the components independantly
 
 ```javascript
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'qrcode-reader-vue3'
 
 const MyComponent = {
 
@@ -120,7 +126,7 @@ or register all of them globally right away
 
 ```javascript
 import Vue from "vue";
-import VueQrcodeReader from "vue-qrcode-reader";
+import VueQrcodeReader from "qrcode-reader-vue3";
 
 Vue.use(VueQrcodeReader);
 ```
@@ -129,7 +135,7 @@ Vue.use(VueQrcodeReader);
 
 Include the following JS file:
 
-https://unpkg.com/vue-qrcode-reader/dist/VueQrcodeReader.umd.min.js
+https://unpkg.com/qrcode-reader-vue3/dist/VueQrcodeReader.umd.min.js
 
 Make sure to include it after Vue:
 
@@ -151,7 +157,7 @@ Use kebab-case to reference them in your templates:
 
 #### I don't see the camera when using `QrcodeStream`.
 
-- Check if it works on the demo page. Especially the [Decode All](https://gruhn.github.io/vue-qrcode-reader/demos/DecodeAll.html) demo, since it renders error messages. If you see errors, consult the docs to understand their meaning.
+- Check if it works on the demo page. Especially the [Decode All](https://scholtz.github.io/qrcode-reader-vue3/demos/DecodeAll.html) demo, since it renders error messages. If you see errors, consult the docs to understand their meaning.
   - The demo works but it doesn't work in my project: Listen for the `init` event to investigate errors.
   - The demo doesn't work: Carefully review the Browser Support section above. Maybe your device is just not supported.
 
@@ -169,10 +175,12 @@ Use kebab-case to reference them in your templates:
 
 # Thanks :pray:
 
+- https://github.com/gruhn/vue-qrcode-reader Original QR code reader (vue2 support)
+
 <a href="https://browserstack.com">
-  <img height="38" src="https://raw.githubusercontent.com/gruhn/vue-qrcode-reader/master/.github/browserstack-logo.png" alt="BrowserStack Logo">
+  <img height="38" src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/browserstack-logo.png" alt="BrowserStack Logo">
 </a>
 <span>&emsp;&emsp;</span>
 <a href="https://travis-ci.org">
-  <img height="38" src="https://raw.githubusercontent.com/gruhn/vue-qrcode-reader/master/.github/travis-logo.png" alt="Travis-CI Logo">
+  <img height="38" src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/travis-logo.png" alt="Travis-CI Logo">
 </a>
