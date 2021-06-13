@@ -1,12 +1,12 @@
 {
   "name": "qrcode-reader-vue3",
   "description": "A set of Vue.js components for detecting and decoding QR codes.",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": {
     "name": "Niklas Gruhn",
     "email": "niklas@gruhn.me"
   },
-  "repository": "github:scholtz/vue-qrcode-reader",
+  "repository": "github:scholtz/qrcode-reader-vue3",
   "bugs": "https://github.com/scholtz/qrcode-reader-vue3/issues",
   "homepage": "https://scholtz.github.io/qrcode-reader-vue3",
   "main": "dist/VueQrcodeReader.common.js",

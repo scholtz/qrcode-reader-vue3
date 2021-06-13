@@ -2,14 +2,14 @@ module.exports = {
   title: 'Vue Qrcode Reader',
   description: 'A set of Vue.js components for detecting and decoding QR codes.',
 
-  base: '/vue-qrcode-reader/',
+  base: '/qrcode-reader-vue3/',
 
   extraWatchFiles: [
     '../src/'
   ],
 
   themeConfig: {
-    repo: 'gruhn/vue-qrcode-reader',
+    repo: 'gruhn/qrcode-reader-vue3',
 
     sidebar: {
       '/demos/': [
