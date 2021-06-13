@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://scholtz.github.io/qrcode-reader-vue3/logo.png" alt="Logo" width="240" height="240" style="max-width: 100%;">
+  <img src="https://scholtz.github.io/wallet/donate.png" alt="Donate" width="240" height="240" style="max-width: 100%;">
 
   <br>
   <br>
@@ -80,6 +80,15 @@ methods: {
   }
 }
 ```
+### Support this project
+
+<p>Please donate algorand to support this project:
+  <img src="https://scholtz.github.io/wallet/donate.png" alt="Donate" width="240" height="240" style="max-width: 100%;">
+</p>
+
+### Sample production use
+
+qrcode reader vue3 is used for example in this production environment: Algorand Wallet - https://github.com/scholtz/wallet/blob/master/src/pages/Pay.vue
 
 ### Screenshots
 

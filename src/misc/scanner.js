@@ -3,7 +3,6 @@ import BarcodeDetector from "barcode-detector";
 import { eventOn } from "callforth";
 
 const adaptOldFormat = (detectedCodes) => {
-  console.log("adaptOldFormat.detectedCodes", detectedCodes);
   if (detectedCodes.length > 0) {
     const [firstCode] = detectedCodes;
 
