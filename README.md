@@ -82,9 +82,8 @@ methods: {
 ```
 ### Support this project
 
-<p>Please donate algorand to support this project:
-  <img src="https://scholtz.github.io/wallet/donate.png" alt="Donate" width="240" height="240" style="max-width: 100%;">
-</p>
+<p>Please donate algorand to support this project:</p>
+<img src="https://scholtz.github.io/wallet/donate.png" alt="Donate" width="240" height="240" style="max-width: 100%;">
 
 ### Sample production use
 
@@ -108,7 +107,7 @@ Run
 npm install --save qrcode-reader-vue3
 ```
 
-If you are looking for QR Code generator, see qrcode-vue3 project
+If you are looking for QR Code generator, see [qrcode-vue3](https://github.com/scholtz/qrcode-vue3/) project
 ```bash
 npm install --save qrcode-vue3
 ```
