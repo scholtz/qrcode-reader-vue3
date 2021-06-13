@@ -3,6 +3,7 @@ import BarcodeDetector from "barcode-detector";
 import { eventOn } from "callforth";
 
 const adaptOldFormat = (detectedCodes) => {
+  console.log("adaptOldFormat.detectedCodes", detectedCodes);
   if (detectedCodes.length > 0) {
     const [firstCode] = detectedCodes;
 
@@ -45,15 +46,8 @@ export const keepScanning = (videoElement, options) => {
   const { detectHandler, locateHandler, minDelay } = options;
 
   const processFrame = (state) => async (timeNow) => {
-    console.log("videoElement.readyState", videoElement.readyState);
     if (videoElement.readyState > 1) {
       const { lastScanned, contentBefore, locationBefore } = state;
-      console.log(
-        "lastScanned, contentBefore, locationBefore",
-        lastScanned,
-        contentBefore,
-        locationBefore
-      );
 
       if (timeNow - lastScanned >= minDelay) {
         const detectedCodes = await barcodeDetector.detect(videoElement);
