@@ -6,11 +6,14 @@
     "name": "Niklas Gruhn",
     "email": "niklas@gruhn.me"
   },
+  "contributors":[
+    "Ludovit Scholtz"
+  ],
   "repository": "github:scholtz/qrcode-reader-vue3",
   "bugs": "https://github.com/scholtz/qrcode-reader-vue3/issues",
   "homepage": "https://scholtz.github.io/qrcode-reader-vue3",
-  "main": "dist/VueQrcodeReader.common.js",
-  "unpkg": "dist/VueQrcodeReader.umd.min.js",
+  "main": "dist/QrcodeReaderVue3.common.js",
+  "unpkg": "dist/QrcodeReaderVue3.umd.min.js",
   "keywords": [
     "vue",
     "vuejs",
@@ -24,7 +27,7 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build:docs": "vuepress build docs",
-    "build": "vue-cli-service build --target lib --name VueQrcodeReader src/index.js",
+    "build": "vue-cli-service build --target lib --name QrcodeReaderVue3 src/index.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

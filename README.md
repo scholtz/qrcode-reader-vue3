@@ -126,22 +126,22 @@ or register all of them globally right away
 
 ```javascript
 import Vue from "vue";
-import VueQrcodeReader from "qrcode-reader-vue3";
+import QrcodeReaderVue3 from "qrcode-reader-vue3";
 
-Vue.use(VueQrcodeReader);
+Vue.use(QrcodeReaderVue3);
 ```
 
 ## Without NPM
 
 Include the following JS file:
 
-https://unpkg.com/qrcode-reader-vue3/dist/VueQrcodeReader.umd.min.js
+https://unpkg.com/qrcode-reader-vue3/dist/QrcodeReaderVue3.umd.min.js
 
 Make sure to include it after Vue:
 
 ```html
 <script src="./vue.js"></script>
-<script src="./VueQrcodeReader.umd.min.js"></script>
+<script src="./QrcodeReaderVue3.umd.min.js"></script>
 ```
 
 All components are automatically registered globally.
