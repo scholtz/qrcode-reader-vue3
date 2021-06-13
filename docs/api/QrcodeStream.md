@@ -9,10 +9,10 @@ This component fundamentally depends on the [Stream API](https://caniuse.com/#fe
 |                                                     No                                                      |                                               Yes                                                |                                                  Yes                                                   |                                                 Yes¹                                                 |                                                 Yes²                                                  |
 
 1. Chrome requires [HTTPS or localhost](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins) (see _Troubleshooting_ for help)
-2. Safari also requires HTTPS **even** on localhost (see [#48](https://github.com/gruhn/vue-qrcode-reader/issues/48)). It also won't work in:
-   - _Chrome for iOS_, _Firefox for iOS_, ... (see [#29](https://github.com/gruhn/vue-qrcode-reader/issues/29))
+2. Safari also requires HTTPS **even** on localhost (see [#48](https://github.com/scholtz/qrcode-reader-vue3/issues/48)). It also won't work in:
+   - _Chrome for iOS_, _Firefox for iOS_, ... (see [#29](https://github.com/scholtz/qrcode-reader-vue3/issues/29))
    - WkWebView component of native iOS apps
-   - web apps added to home screen (PWA mode) **prior to iOS 13.4** (see [#76](https://github.com/gruhn/vue-qrcode-reader/issues/76))
+   - web apps added to home screen (PWA mode) **prior to iOS 13.4** (see [#76](https://github.com/scholtz/qrcode-reader-vue3/issues/76))
 
 
 ## Events
@@ -238,13 +238,13 @@ methods: {
 ### `worker` <Badge text="experimental" type="error" />
 
 ::: tip
-So far *vue-qrcode-reader* could only process QR codes.
+So far *qrcode-reader-vue3* could only process QR codes.
 However, many people requested support for different code types
 (bar codes, data matrix, color inverted QR codes, ...) though.
 With this prop we try to meet these demands.
 
 Please share your successful or unsuccessful implementation attempts at
-[#109](https://github.com/gruhn/vue-qrcode-reader/issues/109).
+[#109](https://github.com/scholtz/qrcode-reader-vue3/issues/109).
 Your feedback is greatly appreciated.
 :::
 
@@ -262,10 +262,10 @@ class MyWorkerClass extends Worker {
   }
 }
 ```
-(Internally, *vue-qrcode-reader* leverages [worker-loader](https://github.com/webpack-contrib/worker-loader)
+(Internally, *qrcode-reader-vue3* leverages [worker-loader](https://github.com/webpack-contrib/worker-loader)
 to makes this slightly more convenient)
 
-To get your `worker.js` right, check out [the default implementation](https://github.com/gruhn/vue-qrcode-reader/blob/91ee3fc8bf2f7fab96ac3f0a5d84d2d4c09b012f/src/worker/jsqr.js).
+To get your `worker.js` right, check out [the default implementation](https://github.com/scholtz/qrcode-reader-vue3/blob/91ee3fc8bf2f7fab96ac3f0a5d84d2d4c09b012f/src/worker/jsqr.js).
 
 Now, pass the worker class via the `worker` prop.
 Don't pass a class instance, we need the class itself!
