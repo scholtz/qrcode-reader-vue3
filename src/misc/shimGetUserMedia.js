@@ -8,19 +8,19 @@ import { StreamApiNotSupportedError } from "./errors";
 import { indempotent } from "./util";
 
 export default indempotent(() => {
-  console.log("adapter.browserDetails.browser", adapter.browserDetails.browser);
+  console.log("adapter.browserDetails.browser", adapter.browserDetails);
   switch (adapter.browserDetails.browser) {
     case "chrome":
-      chromeShim(window);
+      chromeShim(window, adapter.browserDetails);
       break;
     case "firefox":
-      firefoxShim(window);
+      firefoxShim(window, adapter.browserDetails);
       break;
     case "edge":
-      edgeShim(window);
+      edgeShim(window, adapter.browserDetails);
       break;
     case "safari":
-      safariShim(window);
+      safariShim(window, adapter.browserDetails);
       break;
     default:
       throw new StreamApiNotSupportedError();
