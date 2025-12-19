@@ -1,15 +1,16 @@
-<script>
-import BarcodeDetector from "barcode-detector";
+<script lang="ts">
+import { BarcodeDetector } from "barcode-detector";
+import type { QRCodeResult } from "../misc/scanner";
 
 export default {
   beforeMount() {
     // if (!('BarcodeDetector' in window)) {
-    window.BarcodeDetector = BarcodeDetector;
+    (window as any).BarcodeDetector = BarcodeDetector;
     // }
   },
 
   methods: {
-    async onDetect(resultPromise) {
+    async onDetect(resultPromise: Promise<QRCodeResult>) {
       this.$emit("detect", resultPromise);
 
       try {

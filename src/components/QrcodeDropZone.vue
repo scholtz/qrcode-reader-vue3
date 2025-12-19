@@ -9,8 +9,8 @@
   </div>
 </template>
 
-<script>
-import { processFile, processUrl } from "../misc/scanner.js";
+<script lang="ts">
+import { processFile, processUrl } from "../misc/scanner";
 import CommonAPI from "../mixins/CommonAPI.vue";
 
 export default {
@@ -19,15 +19,15 @@ export default {
   mixins: [CommonAPI],
 
   methods: {
-    onDragOver(isDraggingOver) {
+    onDragOver(isDraggingOver: boolean) {
       this.$emit("dragover", isDraggingOver);
     },
 
-    onDrop({ dataTransfer }) {
+    onDrop({ dataTransfer }: DragEvent) {
       this.onDragOver(false);
 
-      const droppedFiles = [...dataTransfer.files];
-      const droppedUrl = dataTransfer.getData("text/uri-list");
+      const droppedFiles = [...(dataTransfer?.files || [])];
+      const droppedUrl = dataTransfer?.getData("text/uri-list") || "";
 
       droppedFiles.forEach((file) => {
         this.onDetect(processFile(file));

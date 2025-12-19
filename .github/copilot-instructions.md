@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This repository contains a Vue 3 component library for detecting and decoding QR codes in the browser. The library provides three main components:
+**This is a TypeScript-based Vue 3 component library** for detecting and decoding QR codes in the browser. The library provides three main components:
 - `QrcodeStream`: Accesses device camera for continuous QR code scanning
 - `QrcodeDropZone`: Drag-and-drop interface for QR code image decoding
 - `QrcodeCapture`: File upload field for QR code scanning
@@ -15,8 +15,8 @@ This repository contains a Vue 3 component library for detecting and decoding QR
 
 ### Getting Started
 ```bash
-# Install dependencies
-npm install
+# Install dependencies (use --legacy-peer-deps if needed)
+npm install --legacy-peer-deps
 
 # Start development server with local demo page
 npm run dev
@@ -30,6 +30,14 @@ npm run lint
 
 ## Code Style and Conventions
 
+### TypeScript Standards
+- **This project uses TypeScript** for all source files
+- All `.ts` files should have proper type annotations
+- Vue components should use `<script lang="ts">` for TypeScript support
+- Avoid using `any` type unless absolutely necessary
+- Export types for public APIs so consumers can use them
+- Type definitions are located in `src/types/`
+
 ### Vue 3 Standards
 - This is a Vue 3 project - use Composition API or Options API consistently with existing code
 - All components are located in `src/components/`
@@ -38,25 +46,55 @@ npm run lint
 
 ### Code Formatting
 - **Prettier** is used for code formatting
-- **ESLint** is configured for linting Vue and JavaScript files
+- **ESLint** is configured for linting Vue and TypeScript files
 - Pre-commit hooks automatically lint staged files
 - Run `npm run lint` to check and fix code style issues
 
 ### File Structure
 ```
 src/
-  ├── components/     # Vue components
-  ├── mixins/        # Shared Vue mixins
-  ├── misc/          # Utility functions and helpers
-  ├── types/         # Type definitions and constants
-  └── index.js       # Main entry point
+  ├── components/     # Vue components (with TypeScript)
+  ├── mixins/        # Shared Vue mixins (with TypeScript)
+  ├── misc/          # Utility functions and helpers (TypeScript)
+  ├── types/         # Type definitions and constants (TypeScript .d.ts files)
+  ├── index.ts       # Main entry point (TypeScript)
+  └── shims-vue.d.ts # Vue TypeScript shims
+```
+
+## TypeScript Guidelines
+
+### When Writing TypeScript Code
+1. Always define interfaces for complex objects
+2. Use proper types for function parameters and return values
+3. Leverage TypeScript's type inference when types are obvious
+4. Create type definitions for third-party libraries that lack them
+5. Export types that consumers of the library might need
+
+### Example TypeScript Patterns
+```typescript
+// Define interfaces for data structures
+interface QRCodeResult {
+  content: string | null;
+  location: QRCodeLocation | null;
+}
+
+// Use proper function types
+export function processFile(file: File): Promise<QRCodeResult> {
+  // implementation
+}
+
+// Type component props properly
+export interface QrcodeStreamProps {
+  camera?: 'auto' | 'rear' | 'front' | 'off';
+  torch?: boolean;
+}
 ```
 
 ## Testing and Quality
 
 ### Before Submitting Changes
 1. Run `npm run lint` to ensure code style compliance
-2. Run `npm run build` to verify the library builds successfully
+2. Run `npm run build` to verify the library builds successfully and type definitions are generated
 3. Test changes using the development server (`npm run dev`)
 4. Ensure changes work across different browsers (Chrome, Firefox, Safari)
 

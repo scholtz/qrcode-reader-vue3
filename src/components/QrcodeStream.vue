@@ -28,10 +28,12 @@
   </div>
 </template>
 
-<script>
-import { keepScanning } from "../misc/scanner.js";
-import Camera from "../misc/camera.js";
+<script lang="ts">
+import { keepScanning } from "../misc/scanner";
+import Camera from "../misc/camera";
+import type { Camera as CameraType } from "../misc/camera";
 import CommonAPI from "../mixins/CommonAPI.vue";
+import type { DetectedBarcode } from "barcode-detector";
 
 export default {
   name: "qrcode-stream",
@@ -43,7 +45,7 @@ export default {
       type: String,
       default: "auto",
 
-      validator(camera) {
+      validator(camera: string) {
         return ["auto", "rear", "front", "off"].includes(camera);
       },
     },
@@ -60,17 +62,17 @@ export default {
 
   data() {
     return {
-      cameraInstance: null,
+      cameraInstance: null as CameraType | null,
       mounted: false,
     };
   },
 
   computed: {
-    shouldStream() {
+    shouldStream(): boolean {
       return this.mounted && this.camera !== "off";
     },
 
-    shouldScan() {
+    shouldScan(): boolean {
       return this.shouldStream === true && this.cameraInstance !== null;
     },
 
@@ -78,7 +80,7 @@ export default {
      * Minimum delay in milliseconds between frames to be scanned. Don't scan
      * so often when visual tracking is disabled to improve performance.
      */
-    scanInterval() {
+    scanInterval(): number {
       if (this.track === undefined) {
         return 500;
       } else {
@@ -88,23 +90,23 @@ export default {
   },
 
   watch: {
-    shouldStream(shouldStream) {
+    shouldStream(shouldStream: boolean) {
       if (!shouldStream) {
-        const canvas = this.$refs.pauseFrame;
+        const canvas = this.$refs.pauseFrame as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
-        const video = this.$refs.video;
+        const video = this.$refs.video as HTMLVideoElement;
 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+        ctx?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
       }
     },
 
-    shouldScan(shouldScan) {
+    shouldScan(shouldScan: boolean) {
       if (shouldScan) {
-        this.clearCanvas(this.$refs.pauseFrame);
-        this.clearCanvas(this.$refs.trackingLayer);
+        this.clearCanvas(this.$refs.pauseFrame as HTMLCanvasElement);
+        this.clearCanvas(this.$refs.trackingLayer as HTMLCanvasElement);
         this.startScanning();
       }
     },
@@ -146,8 +148,8 @@ export default {
             capabilities: {},
           };
         } else {
-          this.cameraInstance = await Camera(this.$refs.video, {
-            camera: this.camera,
+          this.cameraInstance = await Camera(this.$refs.video as HTMLVideoElement, {
+            camera: this.camera as "auto" | "rear" | "front" | "off",
             torch: this.torch,
           });
 
@@ -170,11 +172,11 @@ export default {
     },
 
     startScanning() {
-      const detectHandler = (result) => {
+      const detectHandler = (result: any) => {
         this.onDetect(Promise.resolve(result));
       };
 
-      keepScanning(this.$refs.video, {
+      keepScanning(this.$refs.video as HTMLVideoElement, {
         detectHandler,
         locateHandler: this.onLocate,
         minDelay: this.scanInterval,
@@ -188,9 +190,9 @@ export default {
       }
     },
 
-    onLocate(detectedCodes) {
-      const canvas = this.$refs.trackingLayer;
-      const video = this.$refs.video;
+    onLocate(detectedCodes: DetectedBarcode[]) {
+      const canvas = this.$refs.trackingLayer as HTMLCanvasElement;
+      const video = this.$refs.video as HTMLVideoElement;
 
       if (canvas !== undefined) {
         if (
@@ -198,7 +200,7 @@ export default {
           this.track !== undefined &&
           video !== undefined
         ) {
-          const adjustPoint = ({ x, y }) => {
+          const adjustPoint = ({ x, y }: { x: number; y: number }) => {
             // The visually occupied area of the video element.
             // Because the component is responsive and fills the available space,
             // this can be more or less than the actual resolution of the camera.
@@ -262,9 +264,9 @@ export default {
       }
     },
 
-    clearCanvas(canvas) {
+    clearCanvas(canvas: HTMLCanvasElement) {
       const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
     },
   },
 };
