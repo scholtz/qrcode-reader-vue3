@@ -48,7 +48,7 @@ src/
   ├── components/     # Vue components
   ├── mixins/        # Shared Vue mixins
   ├── misc/          # Utility functions and helpers
-  ├── types/         # Type definitions
+  ├── types/         # Type definitions and constants
   └── index.js       # Main entry point
 ```
 
