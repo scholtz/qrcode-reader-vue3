@@ -125,12 +125,6 @@ export default {
     this.mounted = true;
   },
 
-  // Vue 2:
-  beforeDestroy() {
-    this.beforeResetCamera();
-    this.mounted = false;
-  },
-  // Vue 3:
   beforeUnmount() {
     this.beforeResetCamera();
     this.mounted = false;
