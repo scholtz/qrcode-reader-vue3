@@ -91,16 +91,16 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "revision": "7b7630fe27e73996a764aab8969094aa"
   }, {
     "url": "pwa-512x512.png",
-    "revision": "5e0a4893ebdd02af95cf73c7b7759ddd"
+    "revision": "bc06a5f2e6fe113524232428b00a9fb8"
   }, {
     "url": "pwa-192x192.png",
-    "revision": "05431c417219f6c247a23488366a2b41"
+    "revision": "d9633ad208ea0bc965a5a379ff30e357"
   }, {
     "url": "logo.png",
-    "revision": "5f0c1d6358641bc48207acb9fa0b6182"
+    "revision": "bc06a5f2e6fe113524232428b00a9fb8"
   }, {
     "url": "index.html",
-    "revision": "12edcb3c3dcab3b998aa914db7e549f3"
+    "revision": "8d8fb4d4198e094facffdd7df2e254f6"
   }, {
     "url": "fullscreen.svg",
     "revision": "432c44f09de0b4e0f9e236fad9b8c7f9"
@@ -127,37 +127,37 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "revision": "c6ab43ddd912cedd13ceae46427c275d"
   }, {
     "url": "404.html",
-    "revision": "a78b145aba6bd8622fa69c6f287cea90"
+    "revision": "cba7591297d197b78e8c8d72330c6fd1"
   }, {
     "url": "demos/Validate.html",
-    "revision": "bcc5249d0d29381bdb76941eb4dd22b3"
+    "revision": "8f7535d4b220ce0c2dcf12e5495eda70"
   }, {
     "url": "demos/Upload.html",
-    "revision": "a19396da5c77870f2b73a29fa53c4ee5"
+    "revision": "3a21178315d396f933b2230e84dda6e9"
   }, {
     "url": "demos/Torch.html",
-    "revision": "5c9c4801d3727ad78aeff50110b80234"
+    "revision": "f7d4483cac57cca081c3931786bfc657"
   }, {
     "url": "demos/SwitchCamera.html",
-    "revision": "0dc8a4b996360c355f06fa787024ef44"
+    "revision": "2ee4a6b387de291fa306641674c5de03"
   }, {
     "url": "demos/Simple.html",
-    "revision": "2b36fd833070cb181004131fe1411674"
+    "revision": "b0c2bbcda63faab21149322f8c2b6de4"
   }, {
     "url": "demos/ScanSameQrcodeMoreThanOnce.html",
-    "revision": "f758c0d3adc0282a968bdd5dfe3cd338"
+    "revision": "e85ff4a6a07e27de701d46a3f10f0c7c"
   }, {
     "url": "demos/LoadingIndicator.html",
-    "revision": "fb2e0c64cbaab593a75d2c75a9cba328"
+    "revision": "51f6aafff168bcfa026859159a3e63d3"
   }, {
     "url": "demos/Fullscreen.html",
-    "revision": "3831f9c851b62bbb6648d6beb765d608"
+    "revision": "bce7282c4ebcb9eff0181d2eeeb3304b"
   }, {
     "url": "demos/FullDemo.html",
-    "revision": "e871ff6a94b56c0435ddb1be1f4d5b56"
+    "revision": "0e83dcbfbae7749c003a568330ebcf3f"
   }, {
     "url": "demos/DragDrop.html",
-    "revision": "d23592c9c6b2ed53265beabae7277045"
+    "revision": "d2746eb59224fdb1f8b4af4040d0bd9f"
   }, {
     "url": "assets/style.BQkK1Qee.css",
     "revision": null
@@ -204,97 +204,97 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/inter-italic-cyrillic-ext.r48I6akx.woff2",
     "revision": null
   }, {
-    "url": "assets/index.md.DiejxtqP.lean.js",
+    "url": "assets/index.md.BAf4NcoH.lean.js",
     "revision": null
   }, {
-    "url": "assets/index.md.DiejxtqP.js",
+    "url": "assets/index.md.BAf4NcoH.js",
     "revision": null
   }, {
-    "url": "assets/demos_Validate.md.j3tIfqUl.lean.js",
+    "url": "assets/demos_Validate.md.CvmknI0F.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Validate.md.j3tIfqUl.js",
+    "url": "assets/demos_Validate.md.CvmknI0F.js",
     "revision": null
   }, {
-    "url": "assets/demos_Upload.md.CuQQeJeo.lean.js",
+    "url": "assets/demos_Upload.md.DhqzXupi.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Upload.md.CuQQeJeo.js",
+    "url": "assets/demos_Upload.md.DhqzXupi.js",
     "revision": null
   }, {
-    "url": "assets/demos_Torch.md.8bpab08V.lean.js",
+    "url": "assets/demos_Torch.md.28mX4N_2.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Torch.md.8bpab08V.js",
+    "url": "assets/demos_Torch.md.28mX4N_2.js",
     "revision": null
   }, {
-    "url": "assets/demos_SwitchCamera.md.BXWcrDyn.lean.js",
+    "url": "assets/demos_SwitchCamera.md.BHBhGLoO.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_SwitchCamera.md.BXWcrDyn.js",
+    "url": "assets/demos_SwitchCamera.md.BHBhGLoO.js",
     "revision": null
   }, {
-    "url": "assets/demos_Simple.md.B-Ssvwpu.lean.js",
+    "url": "assets/demos_Simple.md.Dyp0-B2x.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Simple.md.B-Ssvwpu.js",
+    "url": "assets/demos_Simple.md.Dyp0-B2x.js",
     "revision": null
   }, {
-    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.BNfFjfeh.lean.js",
+    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.4ze0Uflt.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.BNfFjfeh.js",
+    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.4ze0Uflt.js",
     "revision": null
   }, {
-    "url": "assets/demos_LoadingIndicator.md.BGPso0B5.lean.js",
+    "url": "assets/demos_LoadingIndicator.md.DgRzqgZp.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_LoadingIndicator.md.BGPso0B5.js",
+    "url": "assets/demos_LoadingIndicator.md.DgRzqgZp.js",
     "revision": null
   }, {
-    "url": "assets/demos_Fullscreen.md.gHI6ocYW.lean.js",
+    "url": "assets/demos_Fullscreen.md.C1H6H1Fs.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Fullscreen.md.gHI6ocYW.js",
+    "url": "assets/demos_Fullscreen.md.C1H6H1Fs.js",
     "revision": null
   }, {
-    "url": "assets/demos_FullDemo.md.OeFGETF_.lean.js",
+    "url": "assets/demos_FullDemo.md.C5IXNxTN.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_FullDemo.md.OeFGETF_.js",
+    "url": "assets/demos_FullDemo.md.C5IXNxTN.js",
     "revision": null
   }, {
-    "url": "assets/demos_DragDrop.md.BFY4cOOj.lean.js",
+    "url": "assets/demos_DragDrop.md.BmUK1NkB.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_DragDrop.md.BFY4cOOj.js",
+    "url": "assets/demos_DragDrop.md.BmUK1NkB.js",
     "revision": null
   }, {
-    "url": "assets/app.BU4VPeHP.js",
+    "url": "assets/app.D7fqhhtx.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeStream.md.B0H-Wjq1.lean.js",
+    "url": "assets/api_QrcodeStream.md.BKcDUWL3.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeStream.md.B0H-Wjq1.js",
+    "url": "assets/api_QrcodeStream.md.BKcDUWL3.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeDropZone.md.COatx7kA.lean.js",
+    "url": "assets/api_QrcodeDropZone.md.BEGcq3yn.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeDropZone.md.COatx7kA.js",
+    "url": "assets/api_QrcodeDropZone.md.BEGcq3yn.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeCapture.md.DW4W_iYB.lean.js",
+    "url": "assets/api_QrcodeCapture.md.DO-NKVJ0.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeCapture.md.DW4W_iYB.js",
+    "url": "assets/api_QrcodeCapture.md.DO-NKVJ0.js",
     "revision": null
   }, {
     "url": "assets/chunks/utils.DdGZ3POZ.js",
     "revision": null
   }, {
-    "url": "assets/chunks/theme.BQoxLs0V.js",
+    "url": "assets/chunks/theme.Cm8J_bSu.js",
     "revision": null
   }, {
     "url": "assets/chunks/safari_shim.tcOtNX9D.js",
@@ -318,26 +318,26 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/chunks/adapter_core.CEti_sgG.js",
     "revision": null
   }, {
-    "url": "assets/chunks/VPLocalSearchBox._yz6i-Vs.js",
+    "url": "assets/chunks/VPLocalSearchBox.CVnVSXux.js",
     "revision": null
   }, {
-    "url": "assets/chunks/@localSearchIndexroot.Cs_l-hc1.js",
+    "url": "assets/chunks/@localSearchIndexroot.D6nkklN0.js",
     "revision": null
   }, {
     "url": "api/QrcodeStream.html",
-    "revision": "9c864de6e899c4abee560a41e0f8af65"
+    "revision": "5cf0084a1b962de12d46cf686aec0119"
   }, {
     "url": "api/QrcodeDropZone.html",
-    "revision": "1f942aa7de99e5691b10ef217814b91d"
+    "revision": "69a1730f9e148833dc674a0e9e6e960c"
   }, {
     "url": "api/QrcodeCapture.html",
-    "revision": "b21e2e0540c549bf440d1018de058b43"
+    "revision": "bc4a3d3d62aa0969496f911bb46c4160"
   }, {
     "url": "pwa-192x192.png",
-    "revision": "05431c417219f6c247a23488366a2b41"
+    "revision": "d9633ad208ea0bc965a5a379ff30e357"
   }, {
     "url": "pwa-512x512.png",
-    "revision": "5e0a4893ebdd02af95cf73c7b7759ddd"
+    "revision": "bc06a5f2e6fe113524232428b00a9fb8"
   }, {
     "url": "manifest.webmanifest",
     "revision": "c133ffde80822bf976a4541bba3ed42c"
