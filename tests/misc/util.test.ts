@@ -4,7 +4,9 @@ import { indempotent, eventOn, timeout } from "../../src/misc/util";
 describe("indempotent", () => {
   it("reuses the result of the first invocation", () => {
     const action = vi.fn((value: number) => value * 2);
-    const memoized = indempotent(action);
+    const memoized = indempotent(
+      action as unknown as (...args: unknown[]) => unknown
+    ) as (value: number) => number;
 
     const first = memoized(3);
     const second = memoized(20);
@@ -16,7 +18,9 @@ describe("indempotent", () => {
 
   it("shares the same promise for concurrent calls", async () => {
     const action = vi.fn(async (value: number) => value * 3);
-    const memoized = indempotent(action);
+    const memoized = indempotent(
+      action as unknown as (...args: unknown[]) => unknown
+    ) as (value: number) => Promise<number>;
 
     const [first, second] = await Promise.all([
       memoized(2),
