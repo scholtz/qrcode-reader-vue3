@@ -1,31 +1,41 @@
+import type { App, Plugin } from "vue";
 import QrcodeStream from "./components/QrcodeStream.vue";
 import QrcodeCapture from "./components/QrcodeCapture.vue";
 import QrcodeDropZone from "./components/QrcodeDropZone.vue";
 
 // Install the components
-export function install(Vue) {
-  Vue.component("qrcode-stream", QrcodeStream);
-  Vue.component("qrcode-capture", QrcodeCapture);
-  Vue.component("qrcode-drop-zone", QrcodeDropZone);
+export function install(app: App): void {
+  app.component("qrcode-stream", QrcodeStream);
+  app.component("qrcode-capture", QrcodeCapture);
+  app.component("qrcode-drop-zone", QrcodeDropZone);
 }
 
 // Expose the components
 export { QrcodeStream, QrcodeCapture, QrcodeDropZone };
 
+// Export types
+export type { QRCodeResult, QRCodeLocation } from "./misc/scanner";
+
 /* -- Plugin definition & Auto-install -- */
 /* You shouldn't have to modify the code below */
 
 // Plugin
-const plugin = { install };
+const plugin: Plugin = { install };
 
 export default plugin;
 
 // Auto-install
-let GlobalVue = null;
+declare global {
+  interface Window {
+    Vue?: App;
+  }
+}
+
+let GlobalVue: App | null = null;
 if (typeof window !== "undefined") {
-  GlobalVue = window.Vue;
+  GlobalVue = window.Vue || null;
 } else if (typeof global !== "undefined") {
-  GlobalVue = global.Vue;
+  GlobalVue = (global as any).Vue || null;
 }
 if (GlobalVue) {
   GlobalVue.use(plugin);

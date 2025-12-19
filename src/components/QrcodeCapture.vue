@@ -9,8 +9,8 @@
   />
 </template>
 
-<script>
-import { processFile } from "../misc/scanner.js";
+<script lang="ts">
+import { processFile } from "../misc/scanner";
 import CommonAPI from "../mixins/CommonAPI.vue";
 
 export default {
@@ -19,8 +19,9 @@ export default {
   mixins: [CommonAPI],
 
   methods: {
-    onChangeInput(event) {
-      const files = [...event.target.files];
+    onChangeInput(event: Event) {
+      const target = event.target as HTMLInputElement;
+      const files = [...(target.files || [])];
       const resultPromises = files.map(processFile);
 
       resultPromises.forEach(this.onDetect);

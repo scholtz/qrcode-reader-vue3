@@ -1,14 +1,20 @@
-import { StreamApiNotSupportedError, InsecureContextError } from "./errors.js";
+import {
+  StreamApiNotSupportedError,
+  InsecureContextError,
+} from "./errors";
 import { eventOn, timeout } from "callforth";
 import shimGetUserMedia from "./shimGetUserMedia";
 
-class Camera {
-  constructor(videoEl, stream) {
+export class Camera {
+  videoEl: HTMLVideoElement;
+  stream: MediaStream;
+
+  constructor(videoEl: HTMLVideoElement, stream: MediaStream) {
     this.videoEl = videoEl;
     this.stream = stream;
   }
 
-  stop() {
+  stop(): void {
     this.videoEl.srcObject = null;
 
     this.stream.getTracks().forEach((track) => {
@@ -17,14 +23,22 @@ class Camera {
     });
   }
 
-  getCapabilities() {
+  getCapabilities(): MediaTrackCapabilities {
     const [track] = this.stream.getVideoTracks();
     // Firefox does not yet support getCapabilities as of August 2020
-    return track?.getCapabilities?.() ?? {};
+    return track?.getCapabilities?.() ?? ({} as MediaTrackCapabilities);
   }
 }
 
-const narrowDownFacingMode = async (camera) => {
+type CameraMode = "auto" | "rear" | "front" | "off";
+
+const narrowDownFacingMode = async (
+  camera: CameraMode
+): Promise<
+  | { deviceId: { exact: string } }
+  | { facingMode: { ideal: string } | { exact: string } }
+  | undefined
+> => {
   // Modern phones often have multipe front/rear cameras.
   // Sometimes special purpose cameras like the wide-angle camera are picked
   // by default. Those are not optimal for scanning QR codes but standard
@@ -64,7 +78,15 @@ const narrowDownFacingMode = async (camera) => {
   }
 };
 
-export default async function (videoEl, { camera, torch }) {
+export interface CameraOptions {
+  camera: CameraMode;
+  torch: boolean;
+}
+
+export default async function (
+  videoEl: HTMLVideoElement,
+  { camera, torch }: CameraOptions
+): Promise<Camera> {
   // At least in Chrome `navigator.mediaDevices` is undefined when the page is
   // loaded using HTTP rather than HTTPS. Thus `STREAM_API_NOT_SUPPORTED` is
   // initialized with `false` although the API might actually be supported.
@@ -83,7 +105,7 @@ export default async function (videoEl, { camera, torch }) {
   // is not available during SSR. So we lazily apply this shim at runtime.
   await shimGetUserMedia();
 
-  const constraints = {
+  const constraints: MediaStreamConstraints = {
     audio: false,
     video: {
       width: { min: 360, ideal: 640, max: 1920 },
@@ -96,14 +118,14 @@ export default async function (videoEl, { camera, torch }) {
 
   if (videoEl.srcObject !== undefined) {
     videoEl.srcObject = stream;
-  } else if (videoEl.mozSrcObject !== undefined) {
-    videoEl.mozSrcObject = stream;
+  } else if ((videoEl as any).mozSrcObject !== undefined) {
+    (videoEl as any).mozSrcObject = stream;
   } else if (window.URL.createObjectURL) {
-    videoEl.src = window.URL.createObjectURL(stream);
-  } else if (window.webkitURL) {
-    videoEl.src = window.webkitURL.createObjectURL(stream);
+    videoEl.src = (window.URL.createObjectURL as any)(stream);
+  } else if ((window as any).webkitURL) {
+    videoEl.src = (window as any).webkitURL.createObjectURL(stream);
   } else {
-    videoEl.src = stream;
+    (videoEl as any).src = stream;
   }
 
   await eventOn(videoEl, "loadeddata");
@@ -117,8 +139,8 @@ export default async function (videoEl, { camera, torch }) {
     const [track] = stream.getVideoTracks();
     const capabilities = track.getCapabilities();
 
-    if (capabilities.torch) {
-      track.applyConstraints({ advanced: [{ torch: true }] });
+    if ((capabilities as any).torch) {
+      track.applyConstraints({ advanced: [{ torch: true } as any] });
     } else {
       console.warn("device does not support torch capability");
     }
