@@ -2,7 +2,7 @@ import {
   StreamApiNotSupportedError,
   InsecureContextError,
 } from "./errors";
-import { eventOn, timeout } from "callforth";
+import { eventOn, timeout } from "./util";
 import shimGetUserMedia from "./shimGetUserMedia";
 
 export class Camera {

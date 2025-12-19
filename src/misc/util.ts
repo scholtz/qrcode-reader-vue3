@@ -15,3 +15,21 @@ export const indempotent = <T extends (...args: any[]) => any>(
     }
   }) as T;
 };
+
+export const eventOn = (
+  target: EventTarget,
+  eventName: string
+): Promise<Event> =>
+  new Promise((resolve) => {
+    const handler = (event: Event): void => {
+      target.removeEventListener(eventName, handler);
+      resolve(event);
+    };
+
+    target.addEventListener(eventName, handler);
+  });
+
+export const timeout = (ms: number): Promise<void> =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });

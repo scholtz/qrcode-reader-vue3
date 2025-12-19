@@ -1,6 +1,6 @@
 import { DropImageFetchError } from "./errors";
 import { BarcodeDetector, type DetectedBarcode } from "barcode-detector";
-import { eventOn } from "callforth";
+import { eventOn } from "./util";
 
 export interface QRCodeLocation {
   topLeftCorner: { x: number; y: number };
