@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/qrcode-reader-vue3/sw.js', { scope: '/qrcode-reader-vue3/' })})}
