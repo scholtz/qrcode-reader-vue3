@@ -1,13 +1,18 @@
 # Pause & Validate
 
-By turning off the camera you can process each scanned QR-code one at a time.
+By pausing you can process each scanned QR-code one at a time.
 The last received frame is still displayed so it just looks like the stream is
 paused.
 
 <ClientOnly>
-  <DemoWrapper component="Validate" />
+  <DemoWrapper :component="Validate" />
 </ClientOnly>
+
+<script setup lang="ts">
+import DemoWrapper from '@/components/DemoWrapper.vue'
+import Validate from '@/components/demos/Validate.vue'
+</script>
 
 ### Source
 
-<<< @/docs/.vuepress/components/demos/Validate.vue
+<<< @/.vitepress/components/demos/Validate.vue

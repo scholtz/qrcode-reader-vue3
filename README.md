@@ -183,7 +183,7 @@ Use kebab-case to reference them in your templates:
 
 # Thanks :pray:
 
-- https://github.com/gruhn/vue-qrcode-reader Original QR code reader (vue2 support)
+- https://github.com/scholtz/qrcode-reader-vue3 Original QR code reader (vue2 support)
 
 <a href="https://browserstack.com">
   <img height="38" src="https://raw.githubusercontent.com/scholtz/qrcode-reader-vue3/master/.github/browserstack-logo.png" alt="BrowserStack Logo">

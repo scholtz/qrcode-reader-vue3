@@ -3,288 +3,331 @@
 ## Browser Support
 
 This component fundamentally depends on the [Stream API](https://caniuse.com/#feat=stream).
+Vue Native is not supported (see [#206](https://github.com/scholtz/qrcode-reader-vue3/issues/206)).
 
 | ![Internet Explorer](./ie_32x32.png) | ![Edge](./edge2019_32x32.png) | ![Firefox](./firefox_32x32.png) | ![Chrome](./chrome_32x32.png) | ![Safari](./safari_32x32.png) |
-| :---------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
-|                                                     No                                                      |                                               Yes                                                |                                                  Yes                                                   |                                                 Yes¹                                                 |                                                 Yes²                                                  |
+| :----------------------------------: | :---------------------------: | :-----------------------------: | :---------------------------: | :---------------------------: |
+|                  No                  |              Yes              |               Yes               |             Yes¹              |             Yes²              |
 
 1. Chrome requires [HTTPS or localhost](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins) (see _Troubleshooting_ for help)
-2. Safari also requires HTTPS **even** on localhost (see [#48](https://github.com/scholtz/qrcode-reader-vue3/issues/48)). It also won't work in:
-   - _Chrome for iOS_, _Firefox for iOS_, ... (see [#29](https://github.com/scholtz/qrcode-reader-vue3/issues/29))
-   - WkWebView component of native iOS apps
-   - web apps added to home screen (PWA mode) **prior to iOS 13.4** (see [#76](https://github.com/scholtz/qrcode-reader-vue3/issues/76))
-
+2. Safari also requires HTTPS **even** on localhost (see [#48](https://github.com/scholtz/qrcode-reader-vue3/issues/48)). Support is limited for:
+   - web apps added to home screen (PWA mode): at least **iOS 13.4** (see [#76](https://github.com/scholtz/qrcode-reader-vue3/issues/76))
+   - iOS browsers other than Safari (_Chrome for iOS_, _Firefox for iOS_, ...): at least **iOS 14.3** (see [#29](https://github.com/scholtz/qrcode-reader-vue3/issues/29))
+   - WkWebView component in native iOS apps: at least **iOS 14.3** (see [#29](https://github.com/scholtz/qrcode-reader-vue3/issues/29))
 
 ## Events
 
-### `decode`
-* **Payload Type:** `String`
+### `detect`
 
-Once a stream from the users camera is loaded, it's displayed and continuously scanned for QR codes. Results are indicated by the `decode` event.
+- **Payload Type:** `DetectedBarcode[]`
+
+Once a stream from the users camera is loaded, it's displayed and continuously scanned for QR codes.
+Results are indicated by the `detect` event.
 
 ```html
-<qrcode-stream @decode="onDecode"></qrcode-stream>
+<qrcode-stream @detect="onDetect"></qrcode-stream>
 ```
+
 ```javascript
 methods: {
-  onDecode (decodedString) {
+  onDetect (detectedCodes) {
     // ...
   }
 }
 ```
 
+The payload is an array of **one or multiple** detected codes (only QR codes supported at the moment).
+The structure of the array items is accroding to the [Barcode Detection API spec](https://wicg.github.io/shape-detection-api/#detectedbarcode-section).
+Here is an example:
+
+```json
+[
+  {
+    "boundingBox": {
+      "x": 82,
+      "y": 70,
+      "width": 178,
+      "height": 188,
+      "top": 70,
+      "right": 260,
+      "bottom": 258,
+      "left": 82
+    },
+    "rawValue": "https://wikipedia.org",
+    "format": "qr_code",
+    "cornerPoints": [
+      { "x": 82, "y": 91 },
+      { "x": 244, "y": 70 },
+      { "x": 260, "y": 240 },
+      { "x": 94, "y": 258 }
+    ]
+  },
+  {
+    "boundingBox": {
+      "x": 322,
+      "y": 135,
+      "width": 244,
+      "height": 240,
+      "top": 135,
+      "right": 566,
+      "bottom": 375,
+      "left": 322
+    },
+    "rawValue": "Hello, world!",
+    "format": "qr_code",
+    "cornerPoints": [
+      { "x": 322, "y": 160 },
+      { "x": 542, "y": 135 },
+      { "x": 566, "y": 359 },
+      { "x": 342, "y": 375 }
+    ]
+  }
+]
+```
+
 ::: tip
-If you scan the same QR code multiple times in a row, `decode` is still only emitted once. When you hold a QR code in the camera, frames are actually decoded multiple times a second but you don't want to be flooded with `decode` events that often. That's why the last decoded QR code is always cached and only new results are propagated. However changing the value of `camera` resets this internal cache.
+If you scan the same QR code multiple times in a row, `detect` is still only emitted once.
+When you hold a QR code in the camera, frames are actually decoded multiple times a second but you don't want to be flooded with `detect` events that often.
+That's why the last decoded QR code is always cached and only new results are propagated.
+However changing the value of `paused` resets this internal cache.
 :::
 
-### `detect`
-* **Payload Type:** `Promise<Object>`
+### `formats` <Badge text="since v5.3.0" type="info" />
 
-The `detect` event is basically a verbose version of `decode`. `decode` only gives you the string encoded by QR codes. `detect` on the other hand ...
+- **Payload Type:** `BarcodeDetectorOptions['formats']`
+- **Default:** `['qr_code']`
 
-* is always emitted before `decode`
-* gives you the unprocessed raw image data
-* gives you the raw bytes of the QR code.
-* gives you the coordinates of the QR code in the camera frame
-* does NOT silently fail in case of errors
+The `formats` prop defines which barcode formats are detected.
+By default, only QR codes are selected,
+so if you want to scan other barcode formats,
+you have to modify this prop.
+See: [supported formats](https://github.com/Sec-ant/barcode-detector?tab=readme-ov-file#barcode-detector).
 
 ```html
-<qrcode-stream @detect="onDetect"></qrcode-stream>
+<qrcode-stream :formats="['qr_code', 'code_128']"></qrcode-stream>
 ```
-```javascript
-methods: {
-  async onDetect (promise) {
-    try {
-      const {
-        imageData,    // raw image data of image/frame
-        content,      // decoded String
-        binaryData,   // The raw bytes of the QR code
-        location      // QR code coordinates
-      } = await promise
-
-      // ...
-    } catch (error) {
-      // ...
-    }
-  }
-}
-```
-
-### `init`
-* **Payload Type:** `Promise<MediaTrackCapabilities>`
-
-It might take a while before the component is ready and the scanning process starts. The user has to be asked for camera access permission first and the camera stream has to be loaded.
-
-If you want to show a loading indicator, you can listen for the `init` event. It's emitted as soon as the component is mounted. It carries a promise which resolves with the cameras [MediaTrackCapabilities](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getCapabilities) when everything is ready. The promise is rejected if initialization fails. This can have [a couple of reasons](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#Exceptions).
 
 ::: warning
-In Chrome you can't prompt users for permissions a second time. Once denied, users can only manually grant them. Make sure your users understand why you need access to their camera **before** you mount this component. Otherwise they might panic and deny and then get frustrated because they don't know how to change their decision.
+Don't select more barcode formats than needed.
+Scanning becomes more expensive the more formats you select.
 :::
 
+Under the hood, we use the standard
+[`BarcodeDetector`](https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector)
+browser API.
+Support varies across devices, operating systems and browsers.
+The component will prefer to use the native implementation if available and otherwise falls back to a polyfill implementation.
+Note that even if the native implementation is availabe,
+the component still might use the polyfill.
+For example, if the native implementation only supports the
+format `'qr_code'` but the you select the formats `['qr_code', 'aztec']`.
+
+### `camera-on` <Badge text="since v5.0.0" type="info" />
+
+- **Payload Type:** `Promise<MediaTrackCapabilities>`
+
+It might take a while before the component is ready and the scanning process starts.
+The user has to be asked for camera access permission first and the camera stream has to be loaded.
+
+If you want to show a loading indicator, you can listen for the `camera-on` event.
+It's emitted as soon as the camera start streaming.
+
+It carries a promise which resolves with the cameras [MediaTrackCapabilities](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getCapabilities) when everything is ready.
+
 ```html
-<qrcode-stream @init="onInit"></qrcode-stream>
+<qrcode-stream @camera-on="onReady"></qrcode-stream>
 ```
+
 ```javascript
 methods: {
-  async onInit (promise) {
-    // show loading indicator
+  onReady(capabilities) {
+    // hide loading indicator
+  }
+}
+```
 
-    try {
-      const { capabilities } = await promise
+::: warning
+In Chrome you can't prompt users for permissions a second time.
+Once denied, users can only manually grant them.
+Make sure your users understand why you need access to their camera **before** you mount this component.
+Otherwise they might panic and deny and then get frustrated because they don't know how to change their decision.
+:::
 
-      // successfully initialized
-    } catch (error) {
-      if (error.name === 'NotAllowedError') {
-        // user denied camera access permisson
-      } else if (error.name === 'NotFoundError') {
-        // no suitable camera device installed
-      } else if (error.name === 'NotSupportedError') {
-        // page is not served over HTTPS (or localhost)
-      } else if (error.name === 'NotReadableError') {
-        // maybe camera is already in use
-      } else if (error.name === 'OverconstrainedError') {
-        // did you requested the front camera although there is none?
-      } else if (error.name === 'StreamApiNotSupportedError') {
-        // browser seems to be lacking features
-      }
-    } finally {
-      // hide loading indicator
+### `camera-off` <Badge text="since v5.0.0" type="info" />
+
+- **Payload Type:** `void`
+
+Emitted whenever the camera is turned off.
+This happens whenever the camera constraints are modified and the camera has to be restarted or a different camera is started.
+For example when switching between front and rear camera.
+
+### `error` <Badge text="since v5.0.0" type="info" />
+
+- **Payload Type:** `Error`
+
+Error events are emitted in particular when camera initialization fails.
+This can happen [a couple of reasons](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#Exceptions).
+
+```html
+<qrcode-stream @error="onError"></qrcode-stream>
+```
+
+```javascript
+methods: {
+  onError(error) {
+    if (error.name === 'NotAllowedError') {
+      // user denied camera access permission
+    } else if (error.name === 'NotFoundError') {
+      // no suitable camera device installed
+    } else if (error.name === 'NotSupportedError') {
+      // page is not served over HTTPS (or localhost)
+    } else if (error.name === 'NotReadableError') {
+      // maybe camera is already in use
+    } else if (error.name === 'OverconstrainedError') {
+      // did you request the front camera although there is none?
+    } else if (error.name === 'StreamApiNotSupportedError') {
+      // browser seems to be lacking features
     }
   }
 }
 ```
+
+### `decode` <Badge text="removed in v5.0.0" type="danger" />
+
+Use `detect` instead.
+
+[docs for v4.0.0](https://github.com/scholtz/qrcode-reader-vue3/blob/781484fccd186e8e30c6191f85beec3bd174ef59/docs/api/QrcodeStream.md)
+
+### `init` <Badge text="removed in v5.0.0" type="danger" />
+
+Use `camera-on`/`error` instead.
+
+[docs for v4.0.0](https://github.com/scholtz/qrcode-reader-vue3/blob/781484fccd186e8e30c6191f85beec3bd174ef59/docs/api/QrcodeStream.md)
+
+### `camera` <Badge text="removed in v5.0.0" type="danger" />
+
+Use `constraints` instead.
+
+[docs for v4.0.0](https://github.com/scholtz/qrcode-reader-vue3/blob/781484fccd186e8e30c6191f85beec3bd174ef59/docs/api/QrcodeStream.md)
 
 ## Props
 
+### `paused` <Badge text="since v5.0.0" type="info" />
+
+- **Input Type:** `Boolean`
+- **Default:** `false`
+
+Setting this prop to `true` freezes the camera.
+Useful if you want to show some microinteraction after successful scans.
+When you unpause the camera is restarted so the `camera-on` event is emitted again.
+
 ### `track`
-* **Input Type:** `Boolean`, `Function`
-* **Default:** `true`
 
-By default detected QR codes are visually highlighted. A transparent canvas overlays the camera stream. When a QR code is detected, its location is painted to the canvas. You can enable/disable this feature by passing `true`/`false` via the `track` prop. If tracking is disabled the camera stream is scanned much less frequently. So if you encounter performance problems on your target device, this might help.
+- **Input Type:** `(codes: DetectedBarcode[], ctx: CanvasRenderingContext2D) => void`
+- **Default:** `undefined`
 
-You can also pass a function with `track` to customize the way the location is painted. This function is called to produce each frame. It receives the location object as the first argument and a `CanvasRenderingContext2D` instance as the second argument.
+You can visually highlight detected QR codes in real-time.
+A transparent canvas overlays the camera stream.
+When a QR code is detected, its location is painted to the canvas.
+
+To enable this feature, pass a function to `track` that defines how this should look like.
+This function is called to produce each frame.
+It receives an array of detected barcodes as the first argument and a `CanvasRenderingContext2D` instance as the second argument.
+
+For example check out [this demo](../demos/FullDemo.md).
+
+Note that the scanning frequency is increased when you provide a track function,
+which might hurt performance perceptibly.
+So if you want to go easy on your target device you might want to keep tracking disabled.
 
 ::: danger
 Avoid access to reactive properties in this function (like stuff in `data`, `computed` or your Vuex store). The function is called several times a second and might cause memory leaks. To be safe don't access `this` at all.
 :::
 
-Say you want to paint in a different color that better fits your overall page theme.
+### `constraints`
+
+- **Input Type:** `MediaTrackConstraints`
+- **Default:** `{ facingMode: "environment" }`
+
+With this prop you can pass an object with various camera configuration options.
+For example whether to use front- or rear camera.
+
+The object must be of type [`MediaTrackConstriants`](https://w3c.github.io/mediacapture-main/#dom-mediatrackconstraints).
+
+The object is passed as-is to `getUserMedia`, which is the API call for requesting a camera stream:
+
+```js
+navigator.mediaDevices.getUserMedia({
+  audio: false,
+  video: the_constraint_object_you_provide
+})
+```
+
+Every time the prop is modified, a new camera stream is requested so the `camera-on` event is emitted again.
+You can catch errors with the `error` event.
+An error can occur for example when you try to use the front camera on a device that doesn't have one.
 
 ```html
-<qrcode-stream :track="repaint"></qrcode-stream>
-```
-```javascript
-methods: {
-  repaint (location, ctx) {
-    const {
-      topLeftCorner,
-      topRightCorner,
-      bottomLeftCorner,
-      bottomRightCorner,
-      // topLeftFinderPattern,
-      // topRightFinderPattern,
-      // bottomLeftFinderPattern
-    } = location
-
-    ctx.strokeStyle = 'blue' // instead of red
-
-    ctx.beginPath()
-    ctx.moveTo(topLeftCorner.x, topLeftCorner.y)
-    ctx.lineTo(bottomLeftCorner.x, bottomLeftCorner.y)
-    ctx.lineTo(bottomRightCorner.x, bottomRightCorner.y)
-    ctx.lineTo(topRightCorner.x, topRightCorner.y)
-    ctx.lineTo(topLeftCorner.x, topLeftCorner.y)
-    ctx.closePath()
-
-    ctx.stroke()
-  }
-}
+<qrcode-stream
+  :constraints="{ facingMode }"
+  @error="onError"
+></qrcode-stream>
 ```
 
-### `camera`
-* **Input Type:** `String`
-* **Default:** `auto`
-* **Valid Inputs:** `auto`, `rear`, `front`, `off`
-
-With the `camera` prop you can control which camera to access on the users device.
-
- * Use `front` or `rear` to force request the front or rear camera respectively.
- * If you choose `auto` the rear camera is requested by default.
-But if a device like a laptop has only a front camera installed, `auto` will fallback to that.
- * Use `off` to not request a camera at all or in other words: turn the camera off.
-
-Every time the camera prop is modified, a new camera stream is requested so the `init` event is emitted again.
-That way you can catch errors.
-For example when the front camera is requested on a device that doesn't have one.
-
-```html
-<qrcode-stream :camera="camera" @init="onCameraChange"></qrcode-stream>
-```
 ```js
 data () {
   return {
-    camera: 'auto'
+    facingMode: 'environment'
   }
 },
 
 methods: {
   startFrontCamera () {
-    this.camera = 'front'
+    this.facingMode = 'user'
   },
 
-  onCameraChange (promise) {
-    promise.catch(error => {
-      const cameraMissingError = error.name === 'OverconstrainedError'
-      const triedFrontCamera = this.camera === 'front'
+  onError (error) {
+    const cameraMissingError = error.name === 'OverconstrainedError'
+    const triedFrontCamera = this.facingMode === 'user'
 
-      if (triedFrontCamera && cameraMissingError) {
-        // no front camera on this device
-      }
-    })
+    if (triedFrontCamera && cameraMissingError) {
+      // no front camera on this device
+    }
   }
 }
 ```
 
 ### `torch`
-* **Input Type:** `Boolean`
-* **Default:** `false`
+
+- **Input Type:** `Boolean`
+- **Default:** `false`
 
 With the `torch` prop you can turn a devices flashlight on/off.
 This is not consistently supported by all devices and browsers.
 Support can even vary on the same device with the same browser.
 For example the rear camera often has a flashlight but the front camera doesn't.
-We can only tell if flashlight control is supported once the camera is loaded and the `init` event has been emitted.
+We can only tell if flashlight control is supported once the camera is loaded and the `camera-on` event has been emitted.
 At the moment, `torch` silently fails on unsupported devices.
-But from the `init` events payload you can access the [MediaTrackCapabilities](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getCapabilities) object.
+But from the `camera-on` events payload you can access the [MediaTrackCapabilities](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/getCapabilities) object.
 This will tell you whether or not `torch` is supported.
 
 Due to API limitations the camera stream must be reloaded when turning the torch on/off.
-That means the `init` event will be emitted again.
-
+That means the `camera-on` event will be emitted again.
 
 ```html
-<qrcode-stream :torch="true" @init="onInit"></qrcode-stream>
+<qrcode-stream
+  :torch="true"
+  @camera-on="onInit"
+></qrcode-stream>
 ```
+
 ```js
 methods: {
-  async onInit (promise) {
-    const { capabilities } = await promise
-
+  onInit (capabilities) {
     const TORCH_IS_SUPPORTED = !!capabilities.torch
   }
 }
 ```
-
-### `worker` <Badge text="experimental" type="error" />
-
-::: tip
-So far *qrcode-reader-vue3* could only process QR codes.
-However, many people requested support for different code types
-(bar codes, data matrix, color inverted QR codes, ...) though.
-With this prop we try to meet these demands.
-
-Please share your successful or unsuccessful implementation attempts at
-[#109](https://github.com/scholtz/qrcode-reader-vue3/issues/109).
-Your feedback is greatly appreciated.
-:::
-
-By default, *QrcodeStream* will only detect QR codes.
-Processing image data is expensive so a web worker is doing the heavy lifting.
-Because the worker is the only QR code specific part of the library though,
-you can replace the default worker and get a component that can scan whatever you want.
-
-First of all you need to create a custom worker class:
-
-```js
-class MyWorkerClass extends Worker {
-  constructor() {
-    super("path/to/worker.js")
-  }
-}
-```
-(Internally, *qrcode-reader-vue3* leverages [worker-loader](https://github.com/webpack-contrib/worker-loader)
-to makes this slightly more convenient)
-
-To get your `worker.js` right, check out [the default implementation](https://github.com/scholtz/qrcode-reader-vue3/blob/91ee3fc8bf2f7fab96ac3f0a5d84d2d4c09b012f/src/worker/jsqr.js).
-
-Now, pass the worker class via the `worker` prop.
-Don't pass a class instance, we need the class itself!
-
-```html
-<qrcode-stream :worker="Worker"></qrcode-stream>
-```
-```js
-data() {
-  return {
-    Worker: MyWorkerClass // Don't do: new MyWorkerClass()
-  }
-}
-```
-
-:::tip
-`QrcodeCapture` and `QrcodeDropZone` too expose the `worker` prop.
-Dedicated API documentation is missing so far but usage should be similar.
-:::
 
 ## Slots
 

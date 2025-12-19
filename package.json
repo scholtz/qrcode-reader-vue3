@@ -27,7 +27,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "vuepress dev docs",
-    "build:docs": "vuepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "build": "vue-cli-service build --target lib --name QrcodeReaderVue3 src/index.ts && npm run postbuild",
     "postbuild": "mkdir -p dist/types && cp src/types/index.d.ts dist/types/ && cp src/types/vue-qrcode-reader.d.ts dist/types/",
     "lint": "eslint --ext .js,.ts,.vue .",
@@ -44,6 +46,7 @@
     "@types/node": "^22.19.3",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@typescript-eslint/parser": "^8.21.0",
+    "@vite-pwa/vitepress": "0.3.1",
     "@vue/cli-plugin-babel": "^5.0.9",
     "@vue/cli-plugin-eslint": "^5.0.9",
     "@vue/cli-plugin-typescript": "^5.0.9",
@@ -62,6 +65,7 @@
     "semantic-release": "^24.2.9",
     "typescript": "~5.6.3",
     "vitest": "^4.0.16",
+    "vitepress": "1.6.4",
     "vue-template-compiler": "^2.7.16"
   },
   "gitHooks": {

@@ -195,7 +195,7 @@ For breaking changes, add `BREAKING CHANGE:` in the commit body to trigger a maj
 
 - [Live Demos](https://scholtz.github.io/qrcode-reader-vue3/demos/DecodeAll.html)
 - [API Reference](https://scholtz.github.io/qrcode-reader-vue3/api/QrcodeStream.html)
-- [Original vue-qrcode-reader (Vue 2)](https://github.com/gruhn/vue-qrcode-reader)
+- [Original vue-qrcode-reader (Vue 2)](https://github.com/scholtz/qrcode-reader-vue3)
 
 ## Notes for AI Assistants
 

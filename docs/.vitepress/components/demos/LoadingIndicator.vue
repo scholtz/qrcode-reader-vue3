@@ -2,8 +2,14 @@
   <div>
     <button @click="reload">Destroy And Re-Create Component</button>
 
-    <qrcode-stream @init="onInit" v-if="!destroyed">
-      <div class="loading-indicator" v-if="loading">
+    <qrcode-stream
+      @camera-on="onCameraOn"
+      v-if="!destroyed"
+    >
+      <div
+        class="loading-indicator"
+        v-if="loading"
+      >
         Loading...
       </div>
     </qrcode-stream>
@@ -14,35 +20,25 @@
 import { QrcodeStream } from '../../../../src'
 
 export default {
-
   components: { QrcodeStream },
 
-  data () {
+  data() {
     return {
-      loading: false,
+      loading: true,
       destroyed: false
     }
   },
 
   methods: {
-    async onInit (promise) {
-      this.loading = true
-
-      try {
-        await promise
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.loading = false
-      }
+    onCameraOn() {
+      this.loading = false
     },
 
-    async reload () {
+    async reload() {
       this.destroyed = true
-
       await this.$nextTick()
-
       this.destroyed = false
+      this.loading = true
     }
   }
 }
