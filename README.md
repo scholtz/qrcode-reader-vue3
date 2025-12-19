@@ -57,7 +57,7 @@
 
   <br>
   <br>
-  <a href="https://scholtz.github.io/qrcode-reader-vue3/demos/DecodeAll.html">live demos</a> |
+  <a href="https://scholtz.github.io/qrcode-reader-vue3/demos/FullDemo.html">live demos</a> |
   <a href="https://scholtz.github.io/qrcode-reader-vue3/api/QrcodeStream.html">api reference</a>
 </p>
 
