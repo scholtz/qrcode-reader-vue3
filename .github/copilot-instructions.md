@@ -10,7 +10,7 @@ This repository contains a Vue 3 component library for detecting and decoding QR
 ## Development Setup
 
 ### Prerequisites
-- Node.js (version 10 or higher recommended)
+- Node.js (version 16 or higher recommended)
 - npm package manager
 
 ### Getting Started
@@ -114,6 +114,7 @@ For breaking changes, add `BREAKING CHANGE:` in the commit body to trigger a maj
 ### Core Dependencies
 - **Vue 3**: UI framework
 - **barcode-detector**: QR code detection/decoding
+- **callforth**: Async function orchestration
 - **webrtc-adapter**: WebRTC polyfills for cross-browser compatibility
 
 ### Adding New Dependencies
