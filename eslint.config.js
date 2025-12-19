@@ -9,6 +9,7 @@ const compat = new FlatCompat({
 module.exports = [
   ...compat.config({
     root: true,
+    ignorePatterns: ["dist/**", "**/dev-dist/**"],
     env: {
       node: true,
       browser: true,
