@@ -1,4 +1,4 @@
-export const indempotent = <T extends (...args: any[]) => any>(
+export const indempotent = <T extends (...args: unknown[]) => unknown>(
   action: T
 ): T => {
   let called = false;
@@ -8,7 +8,7 @@ export const indempotent = <T extends (...args: any[]) => any>(
     if (called) {
       return result;
     } else {
-      result = action(...args);
+      result = action(...args) as ReturnType<T>;
       called = true;
 
       return result;

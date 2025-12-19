@@ -32,6 +32,26 @@ export class Camera {
 
 type CameraMode = "auto" | "rear" | "front" | "off";
 
+type LegacyVideoElement = HTMLVideoElement & {
+  mozSrcObject?: MediaStream;
+};
+
+type VideoElementWithOptionalSrcObject = HTMLVideoElement & {
+  srcObject?: MediaStream | null;
+};
+
+type ExtendedWindow = Window & {
+  webkitURL?: typeof window.URL;
+};
+
+type TorchCapabilities = MediaTrackCapabilities & {
+  torch?: boolean;
+};
+
+type TorchConstraintSet = MediaTrackConstraintSet & {
+  torch?: boolean;
+};
+
 const narrowDownFacingMode = async (
   camera: CameraMode
 ): Promise<
@@ -116,16 +136,29 @@ export default async function (
 
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
-  if (videoEl.srcObject !== undefined) {
-    videoEl.srcObject = stream;
-  } else if ((videoEl as any).mozSrcObject !== undefined) {
-    (videoEl as any).mozSrcObject = stream;
-  } else if (window.URL.createObjectURL) {
-    videoEl.src = (window.URL.createObjectURL as any)(stream);
-  } else if ((window as any).webkitURL) {
-    videoEl.src = (window as any).webkitURL.createObjectURL(stream);
+  const videoWithMoz = videoEl as LegacyVideoElement;
+  const videoWithSrcObject = videoEl as VideoElementWithOptionalSrcObject;
+  const windowWithWebkitURL = window as ExtendedWindow;
+
+  if (videoWithSrcObject.srcObject !== undefined) {
+    videoWithSrcObject.srcObject = stream;
+  } else if (videoWithMoz.mozSrcObject !== undefined) {
+    videoWithMoz.mozSrcObject = stream;
+  } else if (typeof window.URL.createObjectURL === "function") {
+    const objectUrl = window.URL.createObjectURL(
+      stream as unknown as MediaSource
+    );
+    videoWithMoz.src = objectUrl;
+  } else if (
+    windowWithWebkitURL.webkitURL !== undefined &&
+    typeof windowWithWebkitURL.webkitURL.createObjectURL === "function"
+  ) {
+    const objectUrl = windowWithWebkitURL.webkitURL.createObjectURL(
+      stream as unknown as MediaSource
+    );
+    videoWithMoz.src = objectUrl;
   } else {
-    (videoEl as any).src = stream;
+    videoWithMoz.src = stream as unknown as string;
   }
 
   await eventOn(videoEl, "loadeddata");
@@ -139,8 +172,11 @@ export default async function (
     const [track] = stream.getVideoTracks();
     const capabilities = track.getCapabilities();
 
-    if ((capabilities as any).torch) {
-      track.applyConstraints({ advanced: [{ torch: true } as any] });
+    const torchCapabilities = capabilities as TorchCapabilities;
+
+    if (torchCapabilities.torch) {
+      const torchConstraint: TorchConstraintSet = { torch: true };
+      track.applyConstraints({ advanced: [torchConstraint] });
     } else {
       console.warn("device does not support torch capability");
     }

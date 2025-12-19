@@ -33,9 +33,11 @@ declare global {
 
 let GlobalVue: App | null = null;
 if (typeof window !== "undefined") {
-  GlobalVue = window.Vue || null;
-} else if (typeof global !== "undefined") {
-  GlobalVue = (global as any).Vue || null;
+  GlobalVue = window.Vue ?? null;
+} else {
+  type GlobalWithVue = typeof globalThis & { Vue?: App };
+  const maybeGlobal = globalThis as GlobalWithVue;
+  GlobalVue = maybeGlobal.Vue ?? null;
 }
 if (GlobalVue) {
   GlobalVue.use(plugin);

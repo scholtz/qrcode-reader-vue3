@@ -3,8 +3,9 @@
     <p>
       Track function:
       <select v-model="selected">
-        <option v-for="option in options" :key="option.text" :value="option">
-          {{ option.text }}
+        <!-- eslint-disable-next-line vue/valid-v-for -->
+        <option v-for="(option, index) in options" :key="option.text ?? index" :value="option">
+          {{ option.text }}
         </option>
       </select>
     </p>

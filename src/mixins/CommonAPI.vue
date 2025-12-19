@@ -5,7 +5,11 @@ import type { QRCodeResult } from "../misc/scanner";
 export default {
   beforeMount() {
     // if (!('BarcodeDetector' in window)) {
-    (window as any).BarcodeDetector = BarcodeDetector;
+    type WindowWithBarcodeDetector = Window & {
+      BarcodeDetector?: typeof BarcodeDetector;
+    };
+    const windowWithBarcodeDetector = window as WindowWithBarcodeDetector;
+    windowWithBarcodeDetector.BarcodeDetector = BarcodeDetector;
     // }
   },
 

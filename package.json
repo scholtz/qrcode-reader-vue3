@@ -30,7 +30,7 @@
     "build:docs": "vuepress build docs",
     "build": "vue-cli-service build --target lib --name QrcodeReaderVue3 src/index.ts && npm run postbuild",
     "postbuild": "mkdir -p dist/types && cp src/types/index.d.ts dist/types/ && cp src/types/vue-qrcode-reader.d.ts dist/types/",
-    "lint": "vue-cli-service lint"
+    "lint": "eslint --ext .js,.ts,.vue ."
   },
   "dependencies": {
     "barcode-detector": "^3.0.8",
@@ -65,7 +65,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
-      "vue-cli-service lint",
+      "eslint --fix",
       "git add"
     ]
   }

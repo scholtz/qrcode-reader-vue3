@@ -34,6 +34,7 @@ import Camera from "../misc/camera";
 import type { Camera as CameraType } from "../misc/camera";
 import CommonAPI from "../mixins/CommonAPI.vue";
 import type { DetectedBarcode } from "barcode-detector";
+import type { QRCodeResult } from "../misc/scanner";
 
 export default {
   name: "qrcode-stream",
@@ -166,7 +167,7 @@ export default {
     },
 
     startScanning() {
-      const detectHandler = (result: any) => {
+      const detectHandler = (result: QRCodeResult) => {
         this.onDetect(Promise.resolve(result));
       };
 
