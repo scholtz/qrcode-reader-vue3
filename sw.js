@@ -100,7 +100,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "revision": "bc06a5f2e6fe113524232428b00a9fb8"
   }, {
     "url": "index.html",
-    "revision": "8d8fb4d4198e094facffdd7df2e254f6"
+    "revision": "8a3dd6ed9709c20839d6eedba511841e"
   }, {
     "url": "fullscreen.svg",
     "revision": "432c44f09de0b4e0f9e236fad9b8c7f9"
@@ -127,37 +127,37 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "revision": "c6ab43ddd912cedd13ceae46427c275d"
   }, {
     "url": "404.html",
-    "revision": "cba7591297d197b78e8c8d72330c6fd1"
+    "revision": "033172bf21fc8d2f5774d5fad4a4b7d8"
   }, {
     "url": "demos/Validate.html",
-    "revision": "8f7535d4b220ce0c2dcf12e5495eda70"
+    "revision": "ad84f2ec1b15e8ce61627d9ec2b2591b"
   }, {
     "url": "demos/Upload.html",
-    "revision": "3a21178315d396f933b2230e84dda6e9"
+    "revision": "da63bae60107fb1b6f5ce52125cd4599"
   }, {
     "url": "demos/Torch.html",
-    "revision": "f7d4483cac57cca081c3931786bfc657"
+    "revision": "1e142846cb8a805bb823b3777e378d45"
   }, {
     "url": "demos/SwitchCamera.html",
-    "revision": "2ee4a6b387de291fa306641674c5de03"
+    "revision": "9055721a29f0d8c869d97eec06d30d5e"
   }, {
     "url": "demos/Simple.html",
-    "revision": "b0c2bbcda63faab21149322f8c2b6de4"
+    "revision": "e2f1571b2f80ac3cf21f2c160318c9b7"
   }, {
     "url": "demos/ScanSameQrcodeMoreThanOnce.html",
-    "revision": "e85ff4a6a07e27de701d46a3f10f0c7c"
+    "revision": "1dd33351a9090a13b1711c2e35bba6d6"
   }, {
     "url": "demos/LoadingIndicator.html",
-    "revision": "51f6aafff168bcfa026859159a3e63d3"
+    "revision": "6ecc4e20ba009157569ddeddff3d1fd1"
   }, {
     "url": "demos/Fullscreen.html",
-    "revision": "bce7282c4ebcb9eff0181d2eeeb3304b"
+    "revision": "0a7c1e17eb535a88bea68e4dd488566d"
   }, {
     "url": "demos/FullDemo.html",
-    "revision": "0e83dcbfbae7749c003a568330ebcf3f"
+    "revision": "fb4d228375717bdeb398403f355f803a"
   }, {
     "url": "demos/DragDrop.html",
-    "revision": "d2746eb59224fdb1f8b4af4040d0bd9f"
+    "revision": "58edc86ce406f71b0c38be296f50d830"
   }, {
     "url": "assets/style.BQkK1Qee.css",
     "revision": null
@@ -204,97 +204,97 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/inter-italic-cyrillic-ext.r48I6akx.woff2",
     "revision": null
   }, {
-    "url": "assets/index.md.BAf4NcoH.lean.js",
+    "url": "assets/index.md.DErVBZfM.lean.js",
     "revision": null
   }, {
-    "url": "assets/index.md.BAf4NcoH.js",
+    "url": "assets/index.md.DErVBZfM.js",
     "revision": null
   }, {
-    "url": "assets/demos_Validate.md.CvmknI0F.lean.js",
+    "url": "assets/demos_Validate.md.CSYwiZCP.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Validate.md.CvmknI0F.js",
+    "url": "assets/demos_Validate.md.CSYwiZCP.js",
     "revision": null
   }, {
-    "url": "assets/demos_Upload.md.DhqzXupi.lean.js",
+    "url": "assets/demos_Upload.md.CqcgkyDx.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Upload.md.DhqzXupi.js",
+    "url": "assets/demos_Upload.md.CqcgkyDx.js",
     "revision": null
   }, {
-    "url": "assets/demos_Torch.md.28mX4N_2.lean.js",
+    "url": "assets/demos_Torch.md.CiQ2xEnM.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Torch.md.28mX4N_2.js",
+    "url": "assets/demos_Torch.md.CiQ2xEnM.js",
     "revision": null
   }, {
-    "url": "assets/demos_SwitchCamera.md.BHBhGLoO.lean.js",
+    "url": "assets/demos_SwitchCamera.md.Baak3bk3.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_SwitchCamera.md.BHBhGLoO.js",
+    "url": "assets/demos_SwitchCamera.md.Baak3bk3.js",
     "revision": null
   }, {
-    "url": "assets/demos_Simple.md.Dyp0-B2x.lean.js",
+    "url": "assets/demos_Simple.md.Bb7H3vBR.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Simple.md.Dyp0-B2x.js",
+    "url": "assets/demos_Simple.md.Bb7H3vBR.js",
     "revision": null
   }, {
-    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.4ze0Uflt.lean.js",
+    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.DRPr0tJ6.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.4ze0Uflt.js",
+    "url": "assets/demos_ScanSameQrcodeMoreThanOnce.md.DRPr0tJ6.js",
     "revision": null
   }, {
-    "url": "assets/demos_LoadingIndicator.md.DgRzqgZp.lean.js",
+    "url": "assets/demos_LoadingIndicator.md.duSur998.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_LoadingIndicator.md.DgRzqgZp.js",
+    "url": "assets/demos_LoadingIndicator.md.duSur998.js",
     "revision": null
   }, {
-    "url": "assets/demos_Fullscreen.md.C1H6H1Fs.lean.js",
+    "url": "assets/demos_Fullscreen.md.B6MzhIkK.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_Fullscreen.md.C1H6H1Fs.js",
+    "url": "assets/demos_Fullscreen.md.B6MzhIkK.js",
     "revision": null
   }, {
-    "url": "assets/demos_FullDemo.md.C5IXNxTN.lean.js",
+    "url": "assets/demos_FullDemo.md.DjdDvIzj.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_FullDemo.md.C5IXNxTN.js",
+    "url": "assets/demos_FullDemo.md.DjdDvIzj.js",
     "revision": null
   }, {
-    "url": "assets/demos_DragDrop.md.BmUK1NkB.lean.js",
+    "url": "assets/demos_DragDrop.md.BpJdjCKR.lean.js",
     "revision": null
   }, {
-    "url": "assets/demos_DragDrop.md.BmUK1NkB.js",
+    "url": "assets/demos_DragDrop.md.BpJdjCKR.js",
     "revision": null
   }, {
-    "url": "assets/app.D7fqhhtx.js",
+    "url": "assets/app.C9QiLSn_.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeStream.md.BKcDUWL3.lean.js",
+    "url": "assets/api_QrcodeStream.md.DzDKxWHv.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeStream.md.BKcDUWL3.js",
+    "url": "assets/api_QrcodeStream.md.DzDKxWHv.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeDropZone.md.BEGcq3yn.lean.js",
+    "url": "assets/api_QrcodeDropZone.md.Bijv-T76.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeDropZone.md.BEGcq3yn.js",
+    "url": "assets/api_QrcodeDropZone.md.Bijv-T76.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeCapture.md.DO-NKVJ0.lean.js",
+    "url": "assets/api_QrcodeCapture.md.bz5rxo13.lean.js",
     "revision": null
   }, {
-    "url": "assets/api_QrcodeCapture.md.DO-NKVJ0.js",
+    "url": "assets/api_QrcodeCapture.md.bz5rxo13.js",
     "revision": null
   }, {
     "url": "assets/chunks/utils.DdGZ3POZ.js",
     "revision": null
   }, {
-    "url": "assets/chunks/theme.Cm8J_bSu.js",
+    "url": "assets/chunks/theme.DyeqZkx8.js",
     "revision": null
   }, {
     "url": "assets/chunks/safari_shim.tcOtNX9D.js",
@@ -318,20 +318,20 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "url": "assets/chunks/adapter_core.CEti_sgG.js",
     "revision": null
   }, {
-    "url": "assets/chunks/VPLocalSearchBox.CVnVSXux.js",
+    "url": "assets/chunks/VPLocalSearchBox.DCxi9BCN.js",
     "revision": null
   }, {
-    "url": "assets/chunks/@localSearchIndexroot.D6nkklN0.js",
+    "url": "assets/chunks/@localSearchIndexroot.2CqXi0an.js",
     "revision": null
   }, {
     "url": "api/QrcodeStream.html",
-    "revision": "5cf0084a1b962de12d46cf686aec0119"
+    "revision": "e746b88770536f30b0d175ad9de6b6ba"
   }, {
     "url": "api/QrcodeDropZone.html",
-    "revision": "69a1730f9e148833dc674a0e9e6e960c"
+    "revision": "6cf57bde89034c8efca0f57e7ff69e64"
   }, {
     "url": "api/QrcodeCapture.html",
-    "revision": "bc4a3d3d62aa0969496f911bb46c4160"
+    "revision": "52392a4ca2103d42c4229d458c0ffe81"
   }, {
     "url": "pwa-192x192.png",
     "revision": "d9633ad208ea0bc965a5a379ff30e357"
