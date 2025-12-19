@@ -1,17 +1,30 @@
+name: Deploy Docs
+
 on: push
+
+permissions:
+  contents: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: 10
-      - run: npm install
-      - run: npm run docs:build
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build docs
+        run: npm run docs:build
+        env:
+          VITEPRESS_BASE: /qrcode-reader-vue3/
+
       - name: Deploy Docs
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4.6.1
         with:
           branch: gh-pages
           folder: docs/.vitepress/dist
